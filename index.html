@@ -43,9 +43,43 @@ body{
     cursor:pointer;
 
     text-shadow:
+        0 0 0px #00ff66,
+        0 0 0px #00ff66,
+        0 0 0px #00ff66;
+}
+
+#startBtn{
+    padding:18px 40px;
+
+    font-size:24px;
+    font-weight:bold;
+
+    background:#111;
+    color:#00ff66;
+
+    border:2px solid #00ff66;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    box-shadow:
         0 0 10px #00ff66,
+        0 0 20px #00ff66;
+
+    transition:.2s;
+}
+
+#startBtn:hover{
+    transform:scale(1.08);
+
+    box-shadow:
         0 0 20px #00ff66,
         0 0 40px #00ff66;
+}
+
+#startBtn:active{
+    transform:scale(0.95);
 }
     
 #matrix{
@@ -208,7 +242,12 @@ button:hover{
 
 <div id="startScreen">
     CAUTION: MALWARE DETECTED<br><br>
-    Click on the screen to delate it
+
+    
+    <button id="startBtn">
+        DELETE IT
+    </button>
+    
 </div>
 
 <canvas id="matrix"></canvas>
