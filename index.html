@@ -586,11 +586,27 @@ setInterval(()=>{
 },6000);
 
 
-
 const startScreen =
     document.getElementById("startScreen");
 
 startScreen.addEventListener("click",()=>{
+
+    const meow = document.getElementById("meow");
+
+    meow.play()
+    .then(() => {
+
+        console.log("audio unlocked");
+
+        meow.pause();
+        meow.currentTime = 0;
+
+    })
+    .catch(err => {
+
+        console.log("audio error", err);
+
+    });
 
     startScreen.style.display = "none";
 
