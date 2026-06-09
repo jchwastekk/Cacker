@@ -19,6 +19,35 @@ body{
     overflow:hidden;
 }
 
+
+#startScreen{
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    background:black;
+
+    color:#00ff66;
+
+    font-size:42px;
+    font-weight:bold;
+
+    text-align:center;
+
+    z-index:9999;
+
+    cursor:pointer;
+
+    text-shadow:
+        0 0 10px #00ff66,
+        0 0 20px #00ff66,
+        0 0 40px #00ff66;
+}
+    
 #matrix{
     position:fixed;
     inset:0;
@@ -176,6 +205,11 @@ button:hover{
 </style>
 </head>
 <body>
+
+<div id="startScreen">
+    CAUTION: MALWARE DETECTED<br><br>
+    Click on the screen to delate it
+</div>
 
 <canvas id="matrix"></canvas>
 
@@ -461,7 +495,7 @@ function showCat(){
     },650);
 }
 
-nextLine();
+
 
 /* ===========================
    PULS KOTA
@@ -491,15 +525,20 @@ setInterval(()=>{
 
 },6000);
 
-/* ===========================
-   FULLSCREEN
-=========================== */
 
-document.addEventListener("click",()=>{
+
+const startScreen =
+    document.getElementById("startScreen");
+
+startScreen.addEventListener("click",()=>{
+
+    startScreen.style.display = "none";
 
     if(document.documentElement.requestFullscreen){
         document.documentElement.requestFullscreen();
     }
+
+    nextLine();
 
 },{once:true});
 
