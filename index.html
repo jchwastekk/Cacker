@@ -38,9 +38,39 @@ body{
 }
 
 #catScreen img{
-    width:min(70vw,550px);
-    border-radius:20px;
-    box-shadow:0 0 40px #00ff66;
+    width:min(50vw,400px);
+
+    animation:
+        floatCat 3s ease-in-out infinite,
+        glowCat 2s ease-in-out infinite;
+}
+
+@keyframes floatCat{
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+@keyframes glowCat{
+    0%{
+        filter:drop-shadow(0 0 5px #00ff66);
+    }
+
+    50%{
+        filter:drop-shadow(0 0 30px #00ff66);
+    }
+
+    100%{
+        filter:drop-shadow(0 0 5px #00ff66);
+    }
 }
 
 h1{
@@ -83,9 +113,9 @@ button{
 
 <div id="catScreen">
 
-<img src="tosia.jpg">
+<<img id="tosia" src="tosia.png">
 
-<h1>😼 ZOSTAŁEŚ ZCATOWANY 😼</h1>
+<h1>😼 ZOSTAŁEŚ ZHACATOWANY 😼</h1>
 
 <p>Przez Tosię.</p>
 
@@ -117,9 +147,9 @@ const lines = [
 "> Skanowanie zdjęć...",
 "> Skanowanie memów...",
 "",
-"> Znaleziono 481 memów",
-"> Znaleziono 27 screenshotów",
-"> Znaleziono 1 podejrzanego użytkownika",
+"> Znaleziono trojana w ostatnim pobranym porno",
+"> Znaleziono 27 screenshotów koleżanek",
+"> Znaleziono 1 Bambika",
 "",
 "> PRZEJMOWANIE KONTROLI...",
 "",
@@ -164,6 +194,28 @@ function nextLine(){
 
 nextLine();
 
+const cat = document.getElementById("tosia");
+
+setInterval(() => {
+
+    if(document.getElementById("catScreen").style.display === "flex") {
+
+        cat.animate([
+            { transform: 'scale(1)' },
+            { transform: 'scale(1.08)' },
+            { transform: 'scale(1)' }
+        ], {
+            duration: 250
+        });
+
+    }
+
+}, 6000);
+
+document.addEventListener("click", () => {
+    document.documentElement.requestFullscreen();
+}, { once: true });
+    
 </script>
 
 </body>
