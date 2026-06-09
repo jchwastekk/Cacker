@@ -3,9 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System Scan</title>
+<title>CATNET MATRIX</title>
 
 <style>
+
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
@@ -15,14 +19,33 @@ body{
     overflow:hidden;
 }
 
+#matrix{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+}
+
 #terminal{
     padding:30px;
     font-size:22px;
     white-space:pre-line;
+    text-shadow:0 0 10px #00ff66;
 }
 
 .line{
     margin-bottom:10px;
+    animation:fadeLine .25s;
+}
+
+@keyframes fadeLine{
+    from{
+        opacity:0;
+        transform:translateY(5px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 #catScreen{
@@ -46,37 +69,41 @@ body{
 }
 
 @keyframes floatCat{
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-10px);}
+    100%{transform:translateY(0px);}
 }
 
 @keyframes glowCat{
     0%{
         filter:drop-shadow(0 0 5px #00ff66);
     }
-
     50%{
-        filter:drop-shadow(0 0 30px #00ff66);
+        filter:drop-shadow(0 0 35px #00ff66);
     }
-
     100%{
         filter:drop-shadow(0 0 5px #00ff66);
     }
+}
+
+.glitch{
+    position:relative;
+    animation:glitch .15s infinite;
+}
+
+@keyframes glitch{
+    0%{transform:translate(0);}
+    25%{transform:translate(2px,-1px);}
+    50%{transform:translate(-2px,1px);}
+    75%{transform:translate(1px,2px);}
+    100%{transform:translate(0);}
 }
 
 h1{
     color:#00ff66;
     font-size:4rem;
     margin:25px 0 10px;
+    text-shadow:0 0 20px #00ff66;
 }
 
 p{
@@ -90,6 +117,13 @@ button{
     cursor:pointer;
     border:none;
     border-radius:10px;
+    background:#00ff66;
+    color:black;
+    font-weight:bold;
+}
+
+button:hover{
+    transform:scale(1.05);
 }
 
 @keyframes fadeIn{
@@ -97,17 +131,21 @@ button{
     to{opacity:1}
 }
 
-.blink{
-    animation:blink 1s infinite;
-}
-
-@keyframes blink{
-    50%{opacity:0}
+#flash{
+    position:fixed;
+    inset:0;
+    background:white;
+    opacity:0;
+    pointer-events:none;
 }
 
 </style>
 </head>
 <body>
+
+<canvas id="matrix"></canvas>
+
+<div id="flash"></div>
 
 <div id="terminal"></div>
 
@@ -115,12 +153,14 @@ button{
 
 <img id="tosia" src="tosia.png">
 
-<h1>😼 ZOSTAŁEŚ ZHACATOWANY 😼</h1>
+<h1 class="glitch">😼 ZOSTAŁEŚ ZHACATOWANY 😼</h1>
 
 <p>Przez Tosię.</p>
 
-<p>Twój komputer jest bezpieczny.<br>
-Twoja godność już nie.</p>
+<p>
+Twój komputer jest bezpieczny.<br>
+Twoja godność już nie.
+</p>
 
 <p><b>MIAU.</b></p>
 
@@ -136,26 +176,94 @@ Uruchom skan ponownie
 
 <script>
 
+/* ===========================
+   MATRIX RAIN
+=========================== */
+
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas(){
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+const chars =
+"アイウエオカキクケコサシスセソタチツテトABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+const fontSize = 18;
+let columns = Math.floor(window.innerWidth / fontSize);
+let drops = Array(columns).fill(1);
+
+function drawMatrix(){
+
+    ctx.fillStyle = "rgba(0,0,0,0.08)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#00ff66";
+    ctx.font = fontSize + "px monospace";
+
+    for(let i=0;i<drops.length;i++){
+
+        const text =
+            chars[Math.floor(Math.random() * chars.length)];
+
+        ctx.fillText(
+            text,
+            i * fontSize,
+            drops[i] * fontSize
+        );
+
+        if(
+            drops[i] * fontSize > canvas.height &&
+            Math.random() > 0.975
+        ){
+            drops[i] = 0;
+        }
+
+        drops[i]++;
+    }
+}
+
+setInterval(drawMatrix,33);
+
+/* ===========================
+   TERMINAL
+=========================== */
+
 const lines = [
-"CATSCAN v2.0",
+
+"CATNET MATRIX v5.7",
 "",
+"> Inicjalizacja tunelu kwantowego...",
 "> Łączenie z CATNET...",
 "> Połączenie ustanowione",
+"",
+"> Omijanie zabezpieczeń...",
+"> Firewall pominięty",
 "",
 "> Analiza systemu...",
 "> Skanowanie folderu Pobrane...",
 "> Skanowanie zdjęć...",
 "> Skanowanie memów...",
+"> Skanowanie kota...",
 "",
-"> Znaleziono trojana w ostatnim pobranym porno",
-"> Znaleziono 27 screenshotów koleżanek",
-"> Znaleziono 1 Bambika",
+"> Odczyt poziomu miauczenia...",
+"> ROOT ACCESS GRANTED",
 "",
-"> PRZEJMOWANIE KONTROLI...",
+"> Instalacja TOSIA.EXE",
+"> Wgrywanie futra...",
+"> Wgrywanie chaosu...",
+"",
+"> SYSTEM PRZEJĘTY",
 "",
 "3...",
 "2...",
 "1..."
+
 ];
 
 const terminal = document.getElementById("terminal");
@@ -172,54 +280,161 @@ function nextLine(){
 
         terminal.appendChild(div);
 
-        window.scrollTo(0, document.body.scrollHeight);
+        window.scrollTo(
+            0,
+            document.body.scrollHeight
+        );
 
         i++;
 
-        setTimeout(nextLine, 700);
+        if(Math.random() > 0.7){
+            randomBeep();
+        }
+
+        setTimeout(nextLine, 650);
 
     }else{
 
-        setTimeout(() => {
-
-            terminal.style.display = "none";
-
-            document.getElementById("catScreen").style.display = "flex";
-
-                const meow = document.getElementById("meow");
-                meow.currentTime = 0;
-                meow.play().catch(err => console.log(err));
-
-        }, 1200);
+        setTimeout(showCat,1200);
 
     }
+}
 
+/* ===========================
+   DŹWIĘKI MATRIXOWE
+=========================== */
+
+function beep(freq,duration){
+
+    const audioCtx =
+        new (window.AudioContext ||
+        window.webkitAudioContext)();
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = "square";
+    osc.frequency.value = freq;
+
+    gain.gain.value = 0.03;
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+
+    setTimeout(()=>{
+        osc.stop();
+        audioCtx.close();
+    },duration);
+}
+
+function randomBeep(){
+
+    const sounds = [
+        [500,80],
+        [800,90],
+        [1200,70],
+        [1500,60],
+        [1800,50]
+    ];
+
+    const s =
+        sounds[Math.floor(Math.random()*sounds.length)];
+
+    beep(s[0],s[1]);
+}
+
+/* ===========================
+   KOT
+=========================== */
+
+function showCat(){
+
+    beep(1800,100);
+
+    setTimeout(()=>{
+        beep(900,120);
+    },150);
+
+    setTimeout(()=>{
+        beep(2200,80);
+    },320);
+
+    setTimeout(()=>{
+
+        const flash =
+            document.getElementById("flash");
+
+        flash.style.opacity = "1";
+
+        setTimeout(()=>{
+            flash.style.opacity = "0";
+        },100);
+
+    },450);
+
+    setTimeout(()=>{
+
+        terminal.style.display = "none";
+
+        document.getElementById("catScreen")
+            .style.display = "flex";
+
+        const meow =
+            document.getElementById("meow");
+
+        meow.currentTime = 0;
+
+        meow.play().catch(err=>{
+            console.log(err);
+        });
+
+    },650);
 }
 
 nextLine();
 
-const cat = document.getElementById("tosia");
+/* ===========================
+   PULS KOTA
+=========================== */
 
-setInterval(() => {
+const cat =
+    document.getElementById("tosia");
 
-    if(document.getElementById("catScreen").style.display === "flex") {
+setInterval(()=>{
 
-        cat.animate([
-            { transform: 'scale(1)' },
-            { transform: 'scale(1.08)' },
-            { transform: 'scale(1)' }
-        ], {
-            duration: 250
+    if(
+        document.getElementById("catScreen")
+        .style.display === "flex"
+    ){
+
+        cat.animate(
+        [
+            {transform:"scale(1)"},
+            {transform:"scale(1.08)"},
+            {transform:"scale(1)"}
+        ],
+        {
+            duration:250
         });
 
     }
 
-}, 6000);
+},6000);
 
-document.addEventListener("click", () => {
-    document.documentElement.requestFullscreen();
-}, { once: true });
-    
+/* ===========================
+   FULLSCREEN
+=========================== */
+
+document.addEventListener("click",()=>{
+
+    if(document.documentElement.requestFullscreen){
+        document.documentElement.requestFullscreen();
+    }
+
+},{once:true});
+
 </script>
 
 </body>
