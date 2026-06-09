@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CATNET MATRIX</title>
+<title>CATRIX</title>
 
 <style>
 
@@ -70,6 +70,28 @@ body{
     transition:.2s;
 }
 
+#fakeClose{
+    position:absolute;
+    top:20px;
+    right:30px;
+
+    font-size:42px;
+    font-weight:bold;
+
+    color:#00ff66;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    text-shadow:0 0 10px #00ff66;
+
+    transition:.2s;
+}
+
+#fakeClose:hover{
+    transform:scale(1.2);
+}
 #startBtn:hover{
     transform:scale(1.08);
 
@@ -241,6 +263,9 @@ button:hover{
 <body>
 
 <div id="startScreen">
+
+    <div id="fakeClose">✕</div>
+    
     CAUTION: MALWARE DETECTED<br><br>
 
     
