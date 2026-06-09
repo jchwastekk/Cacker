@@ -128,8 +128,8 @@ Twoja godność już nie.</p>
 Uruchom skan ponownie
 </button>
 
-<audio autoplay>
-<source src="miau.mp3" type="audio/mpeg">
+<audio id="meow">
+    <source src="miau.mp3" type="audio/mpeg">
 </audio>
 
 </div>
@@ -185,6 +185,10 @@ function nextLine(){
             terminal.style.display = "none";
 
             document.getElementById("catScreen").style.display = "flex";
+
+                const meow = document.getElementById("meow");
+                meow.currentTime = 0;
+                meow.play().catch(err => console.log(err));
 
         }, 1200);
 
