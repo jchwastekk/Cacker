@@ -274,20 +274,23 @@ const lines = [
 
 "CATRIX",
 "",
-"> Inicjalizacja tunelu kociego...",
-"> Łączenie z CATNET...",
-"> Połączenie ustanowione",
+"> INITIATION",
+"> CLICK TO CANCEL",
 "",
-"> Firewall pominięty",
 "",
-"> SKANOWANIE SYSTEMU",
+"> CONNECTING WITH CATNET",
+"> CONNECTION ESTABLISHED",
+"",
+"> FIREWALL BYPASSED",
+"",
+"> SYSTEM SCANNING",
 "> ROOT ACCESS GRANTED",
 "",
-"> Instalacja TOSIA.EXE",
-"> Wgrywanie...",
-"> Przejmowanie BTC",
+"> TOSIA.EXE INSTALATION",
+"> UPLOADING THE BTC CAPTURE KEY",
+
 "",
-"> SYSTEM PRZEJĘTY",
+"> SYSTEM CRITICAL STATUS",
 "",
 
 
@@ -397,7 +400,7 @@ async function furInitialization(){
         bar.style.width = p + "%";
 
         text.textContent =
-            "WGRYWANIE FUTRA: " + p + "%";
+            "UPLOADING: " + p + "%";
 
         if(p % 10 === 0){
             randomBeep();
